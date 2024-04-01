@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suma Totală</title>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .selected {
+        background-color: lightblue; 
+    }
+</style>
+</head>
+<body>
+
+<h1>Laborator 4</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Carte</th>
+      <th>Pret</th>
+      <th>Selectare</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Javascript: Javascript basics for Beginners</td>
+      <td>$19</td>
+      <td><input type="checkbox" name="carte" value="19.99" onchange="highlightRow(this)"></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>JavaScript from Beginner to Professional</td>
+      <td>$34</td>
+      <td><input type="checkbox" name="carte" value="34.99" onchange="highlightRow(this)"></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>JavaScript From Zero to Hero</td>
+      <td>$26</td>
+      <td><input type="checkbox" name="carte" value="26.24" onchange="highlightRow(this)"></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>JavaScript: The Definitive Guide, 7th Edition</td>
+      <td>$32</td>
+      <td><input type="checkbox" name="carte" value="32.49" onchange="highlightRow(this)"></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Eloquent JavaScript, 3rd Edition</td>
+      <td>$20</td>
+      <td><input type="checkbox" name="carte" value="20.94" onchange="highlightRow(this)"></td>
+    </tr>
+  </tbody>
+</table>
+
+<br><br>
+
+<button onclick="calculSuma()">Calculează Suma Totală</button>
+
+<p id="sumaTotala"></p>
+
+<script>
+function calculSuma() {
+    var sum = 0;
+    var checkboxes = document.getElementsByName("carte");
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            sum += parseInt(checkboxes[i].value);
+        }
+    }
+    document.getElementById("sumaTotala").innerHTML = "Suma Totală: $" + sum.toFixed(2);
+}
+
+function highlightRow(checkbox) {
+    var row = checkbox.parentNode.parentNode;
+    if (checkbox.checked) {
+        row.classList.add("selected");
+    } else {
+        row.classList.remove("selected");
+    }
+}
+</script>
+
+</body>
+</html>

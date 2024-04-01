@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testare JavaScript</title>
+</head>
+<body>
+ 
+<h1>ASYNCHRONOUS JAVASCRIPT</h1>
+ 
+<div>
+    <textarea id="code" rows="10" cols="50">
+// Scrieți sau inserați aici codul JavaScript 
+    </textarea>
+</div>
+ 
+<div>
+    <button onclick="executeCode()">Execută Codul</button>
+</div>
+ 
+<div id="output">
+    <h2>Rezultat:</h2>
+    <pre id="result"></pre> <!-- Pre pentru a afișa rezultatul într-un mod pre-formatat -->
+</div>
+ 
+<script>
+    function executeCode() {
+    const code = document.getElementById('code').value;
+    let result = ''; // Inițializăm result cu un șir gol
+    const consoleLog = console.log; // Salvăm funcția console.log originală
+    console.log = (message) => { // Suprascriem console.log pentru a captura ieșirea
+        result += message + '\n'; // Concatenăm mesajul la rezultatul anterior și adăugăm un rând nou
+    };
+    try {
+        // Folosim Function() pentru a crea o funcție din codul introdus de utilizator
+        const func = new Function(code);
+        func(); // Apelăm funcția
+    } catch (error) {
+        result = error.message; // Dacă apare o eroare, afișăm mesajul de eroare
+    }
+    console.log = consoleLog; // Restaurăm funcția console.log originală
+    document.getElementById('result').textContent = result; // Afișăm rezultatul în pre
+}
+
+let arrex = [
+    "",
+    `const carti = ['Carte1', 'Carte2', 'Carte3', 'Carte4', 'Carte5'];
+    carti.forEach((item, index) => {
+        setTimeout(() => { console.log(item); }, index * 2000); // Afisează fiecare element la fiecare două secunde
+    });`,
+    
+    `const greeks = ['mere', 'pere', 'prune'];
+    greeks.forEach(item => console.log(item));`,
+];
+
+function loadex(nr){
+    document.getElementById("code").value = arrex[nr];
+    document.getElementById('result').textContent = ''; // Se șterge rezultatul anterior
+}
+
+</script> 
+
+<ul>
+    <li><a href="#" onclick="loadex(1);">ex.1</a></li>
+    <li><a href="#" onclick="loadex(2);">ex.2</a></li>
+    <li><a href="#" onclick="loadex(3);">ex.3</a></li>
+</ul>
+
+</body>
+</html>
