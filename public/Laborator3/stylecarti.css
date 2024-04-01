@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*text-transform: capitalize;*/
+    letter-spacing: .5px;
+}
+
+.card-container{
+    width: 80%;
+    margin: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 250px);
+    gap: 20px;
+}
+.card:hover{
+    background: rgb(226,226,226);
+}
+.card-title {
+    color: bleu;
+    margin-bottom: 80px;
+}
+
+.card-author {
+    color: rgb(42, 12, 7);
+    margin-bottom: .5rem;
+}
+
+.card-year {
+    color: rgb(42, 12, 105);
+    margin-bottom: .5rem;
+}
+p {
+    font-family: Helvetica, Arial, Sans-Serif;
+}
