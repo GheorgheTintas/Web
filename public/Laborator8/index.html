@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Viewer</title>
+</head>
+<body>
+<h1>Image Viewer</h1>
+<select id="imageSelect">
+    <option value="Laborator6.png">Laborator6</option>
+    <option value="Tabel.png">Tabel</option>
+    <option value="Tabel_carti.png">Tabel carti</option>
+</select>
+
+<div id="imageContainer"></div>
+
+<script>
+    const imageSelect = document.getElementById('imageSelect');
+    const imageContainer = document.getElementById('imageContainer');
+
+    imageSelect.addEventListener('change', () => {
+        const selectedImage = imageSelect.value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `/getImage?image=${selectedImage}`, true);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function() {
+            if (this.status === 200) {
+                const blob = this.response;
+                const imgUrl = URL.createObjectURL(blob);
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                imageContainer.innerHTML = '';
+                imageContainer.appendChild(img);
+            }
+        };
+
+        xhr.send();
+    });
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ const http = require('http');
 const fs = require('fs'); // Modulul fs (file system) este folosit pentru a citi fișiere
 
 // Definim portul pe care serverul nostru va asculta
-const port = process.env.PORT || 3023;
+const port = process.env.PORT || 3000;
 
 // Creăm un server HTTP
 const server = http.createServer((req, res) => {
@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
             res.end(data); // Trimitem conținutul fișierului HTML către client
         }
     });
-
+/*
     fs.readFile('Laborator4/lista_studenti.html', (err, data) => {
         if (err) {
             res.writeHead(500, {'Content-Type': 'text/plain'});
@@ -27,6 +27,8 @@ const server = http.createServer((req, res) => {
             res.end(data); // Trimitem conținutul fișierului HTML către client
         }
     });
+
+ */
 });
 
 // Ascultăm pe portul definit și afișăm un mesaj când serverul este pornit

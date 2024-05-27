@@ -1,0 +1,23 @@
+<!-- students.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de studenți</title>
+</head>
+<body>
+<h1>Lista de studenți</h1>
+<ul>
+    <% students.forEach(student => { %>
+        <li>
+            <strong>Nume:</strong> <%= student.name %><br>
+            <strong>Email:</strong> <%= student.email %><br>
+            <strong>Telefon:</strong> <%= student.phone %><br>
+            <strong>Proiecte:</strong> <%= student.projects.join(', ') %>
+        </li>
+    <% }); %>
+</ul>
+</body>
+</html>
