@@ -1,0 +1,799 @@
+Index: Laborator5/incercare.html
+===================================================================
+diff --git a/Laborator5/incercare.html b/Laborator5/incercare.html
+deleted file mode 100644
+--- a/Laborator5/incercare.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,71 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>Testare JavaScript</title>
+-</head>
+-<body>
+- 
+-<h1>ASYNCHRONOUS JAVASCRIPT</h1>
+- 
+-<div>
+-    <textarea id="code" rows="10" cols="50">
+-// Scrieți sau inserați aici codul JavaScript 
+-    </textarea>
+-</div>
+- 
+-<div>
+-    <button onclick="executeCode()">Execută Codul</button>
+-</div>
+- 
+-<div id="output">
+-    <h2>Rezultat:</h2>
+-    <pre id="result"></pre> <!-- Pre pentru a afișa rezultatul într-un mod pre-formatat -->
+-</div>
+- 
+-<script>
+-    function executeCode() {
+-    const code = document.getElementById('code').value;
+-    let result = ''; // Inițializăm result cu un șir gol
+-    const consoleLog = console.log; // Salvăm funcția console.log originală
+-    console.log = (message) => { // Suprascriem console.log pentru a captura ieșirea
+-        result += message + '\n'; // Concatenăm mesajul la rezultatul anterior și adăugăm un rând nou
+-    };
+-    try {
+-        // Folosim Function() pentru a crea o funcție din codul introdus de utilizator
+-        const func = new Function(code);
+-        func(); // Apelăm funcția
+-    } catch (error) {
+-        result = error.message; // Dacă apare o eroare, afișăm mesajul de eroare
+-    }
+-    console.log = consoleLog; // Restaurăm funcția console.log originală
+-    document.getElementById('result').textContent = result; // Afișăm rezultatul în pre
+-}
+-
+-let arrex = [
+-    "",
+-    `const carti = ['Carte1', 'Carte2', 'Carte3', 'Carte4', 'Carte5'];
+-    carti.forEach((item, index) => {
+-        setTimeout(() => { console.log(item); }, index * 2000); // Afisează fiecare element la fiecare două secunde
+-    });`,
+-    
+-    `const greeks = ['mere', 'pere', 'prune'];
+-    greeks.forEach(item => console.log(item));`,
+-];
+-
+-function loadex(nr){
+-    document.getElementById("code").value = arrex[nr];
+-    document.getElementById('result').textContent = ''; // Se șterge rezultatul anterior
+-}
+-
+-</script> 
+-
+-<ul>
+-    <li><a href="#" onclick="loadex(1);">ex.1</a></li>
+-    <li><a href="#" onclick="loadex(2);">ex.2</a></li>
+-    <li><a href="#" onclick="loadex(3);">ex.3</a></li>
+-</ul>
+-
+-</body>
+-</html>
+Index: Laborator4/script.js
+===================================================================
+diff --git a/Laborator4/script.js b/Laborator4/script.js
+deleted file mode 100644
+--- a/Laborator4/script.js	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,28 +0,0 @@
+-var slideIndex = 1;
+-showSlides(slideIndex);
+-
+-function plusSlides(n) {
+-  showSlides(slideIndex += n);
+-}
+-
+-function currentSlide(n) {
+-  showSlides(slideIndex = n);
+-}
+-
+-function showSlides(n) {
+-  var i;
+-  var slides = document.getElementsByClassName("mySlides");
+-  var dots = document.getElementsByClassName("demo");
+-  var captionText = document.getElementById("caption");
+-  if (n > slides.length) {slideIndex = 1}
+-  if (n < 1) {slideIndex = slides.length}
+-  for (i = 0; i < slides.length; i++) {
+-      slides[i].style.display = "none";
+-  }
+-  for (i = 0; i < dots.length; i++) {
+-      dots[i].className = dots[i].className.replace(" active", "");
+-  }
+-  slides[slideIndex-1].style.display = "block";
+-  dots[slideIndex-1].className += " active";
+-  captionText.innerHTML = dots[slideIndex-1].alt;
+-}
+\ No newline at end of file
+Index: Laborator4/style.css
+===================================================================
+diff --git a/Laborator4/style.css b/Laborator4/style.css
+deleted file mode 100644
+--- a/Laborator4/style.css	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,88 +0,0 @@
+-body {
+-    font-family: Arial;
+-    margin: 0;
+-  }
+-  
+-  * {
+-    box-sizing: border-box;
+-  }
+-  
+-  img {
+-    vertical-align: middle;
+-  }
+-  
+-  .container {
+-    position: relative;
+-  }
+-  
+-  .mySlides {
+-    display: none;
+-  }
+-  
+-  .cursor {
+-    cursor: pointer;
+-  }
+-  
+-  .prev,
+-  .next {
+-    cursor: pointer;
+-    position: absolute;
+-    top: 40%;
+-    width: auto;
+-    padding: 16px;
+-    margin-top: -50px;
+-    color: white;
+-    font-weight: bold;
+-    font-size: 20px;
+-    border-radius: 0 3px 3px 0;
+-    user-select: none;
+-    -webkit-user-select: none;
+-    background-color: rgba(0, 0, 0, 0.8);
+-  }
+-  
+-  .next {
+-    right: 0;
+-    border-radius: 3px 0 0 3px;
+-  }
+-  
+-  .numbertext {
+-    color: #f2f2f2;
+-    font-size: 12px;
+-    padding: 8px 12px;
+-    position: absolute;
+-    top: 0;
+-  }
+-  
+-  .caption-container {
+-    text-align: center;
+-    background-color: #222;
+-    padding: 2px 16px;
+-    color: white;
+-  }
+-  
+-  .row:after {
+-    content: "";
+-    display: table;
+-    clear: both;
+-  }
+-  
+-  .column {
+-    float: left;
+-    width: 50%;
+-  }
+-  
+-  .demo {
+-    opacity: 0.6;
+-  }
+-  
+-  .active,
+-  .demo:hover {
+-    opacity: 1;
+-  }
+-  
+-  .center {
+-    display: block;
+-    margin-left: auto;
+-    margin-right: auto;
+-    width: 50%;
+-  }
+\ No newline at end of file
+Index: Laborator4/slider.html
+===================================================================
+diff --git a/Laborator4/slider.html b/Laborator4/slider.html
+deleted file mode 100644
+--- a/Laborator4/slider.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,36 +0,0 @@
+-
+-<!DOCTYPE html>
+-<html>
+-
+-<head>
+-    <title>Image Slider</title>
+-    <meta charset="UTF-8" />
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <link rel="stylesheet" type="text/css" href="style.css">
+-</head>
+-
+-<body>
+-    <div class="container">
+-        <div class="mySlides">
+-          <div class="numbertext">1 / 3</div>
+-          <img src="orar.png" width="100"; class="center">
+-        </div>
+-      
+-        <div class="mySlides">
+-          <div class="numbertext">2 / 3</div>
+-          <img src="carti.png" width="100"; class="center">
+-        </div>
+-          
+-      <br></br>
+-      <br></br>
+-      
+-        <a class="prev" onclick="plusSlides(-1)"><</a>
+-        <a class="next" onclick="plusSlides(1)">></a>
+-      
+-        <div class="caption-container">
+-          <p id="caption"></p>
+-        </div>
+-     
+-      <script src="script.js"></script>
+-</body>
+-</html>
+\ No newline at end of file
+Index: Laborator5/style.css
+===================================================================
+diff --git a/Laborator5/style.css b/Laborator5/style.css
+deleted file mode 100644
+--- a/Laborator5/style.css	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,19 +0,0 @@
+-div {
+-    width: 300px;
+-    height: auto;
+-    border: 5px solid green;
+-    padding: 5px;
+-    margin: 5px;
+-    background-color: aquamarine;
+-    border-radius: 5px;
+-
+-  }
+-  h1 {
+-    display: block;
+-    font-size: 1.5em;
+-    margin-top: 0.67em;
+-    margin-bottom: 0.67em;
+-    margin-left: 0;
+-    margin-right: 0;
+-    text-align:left;
+-  }
+\ No newline at end of file
+Index: Laborator4/studenti.js
+===================================================================
+diff --git a/Laborator4/studenti.js b/Laborator4/studenti.js
+deleted file mode 100644
+--- a/Laborator4/studenti.js	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,29 +0,0 @@
+-listaStudenti=`
+-1. Andreica Gabriel-Ioan
+-2. Astalos Rares
+-3. Axinte Patrick
+-4. Balla Sergiu Mihai
+-5. Balog David-Alexandru
+-6. Bancos Andrei-Marius
+-7. Bota Emanuel-Iosif
+-8. Bura George Daniel
+-9. Chereches Dan-Cristian
+-10. Cozma Dora Cristina
+-11. Crisan Mihai George
+-12. Crisan Antonel Gabriel
+-13. Dan Lorena Elena
+-14. Dancos Robert Nicolae
+-15. Dragos (cas. Butuza) Andreea-Denisa-Elena
+-16. Hanganu Mircea - Nicolae
+-17. Heres Marius Mihai
+-18. Iacob Razvan-Laurentiu
+-19. Kalisch Armand Mihai
+-20. Marchis Ionut-Florin
+-21. Osan Tudor
+-22. Ossian Mihai Vlad
+-23. Tintas Gheorghe-Mihaita
+-24. Tomoiaga Ioana-Gabriela
+-25. Torz Iulian-Marius
+-26. Urda Cosmin George
+-27. Viman Mario Bogdan
+-28. Zaharie Dorin Catalin`;
+\ No newline at end of file
+Index: Laborator5/indexasincron.js
+===================================================================
+diff --git a/Laborator5/indexasincron.js b/Laborator5/indexasincron.js
+deleted file mode 100644
+--- a/Laborator5/indexasincron.js	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,49 +0,0 @@
+-const titluriCarti = [
+-    "Carte1",
+-    "Carte2",
+-    "Carte3",
+-    "Carte4",
+-    "Carte5"
+-];
+-
+-function f1() {
+-    var lista = document.getElementById("ex1");
+-    titluriCarti.forEach((titlu) => {
+-        let li = document.createElement("li");
+-        li.appendChild(document.createTextNode(" " + titlu));
+-        lista.appendChild(li);
+-    });
+-}
+-function f2() {
+-    var lista = document.getElementById("ex2");
+-    let nrSecunde = 2;
+-    let miliSec = nrSecunde * 1000;
+-    titluriCarti.forEach((titlu, i) => {
+-        setTimeout(() => {
+-            let li = document.createElement("li");
+-            li.appendChild(document.createTextNode(" " + titlu));
+-            lista.appendChild(li);
+-        }, (i + 1) * miliSec)
+-
+-    });
+-}
+-function f3() {
+-    var div = document.getElementById("ex3");
+-    setTimeout(() => {
+-        div.style.backgroundColor = "#00FF00";
+-    }, 3000);
+-}
+-function changeBackground() {
+-    var colors = ["red", "orange", "yellow", "green","#FDF4E3", "blue", "purple"];
+-    var randomColor = colors[Math.floor(Math.random() * colors.length)];
+-    var div = document.getElementById("ex4");
+-    div.style.backgroundColor = randomColor;
+-    randomColor = colors[Math.floor(Math.random() * colors.length)];
+-    div.style.borderColor = randomColor;
+-
+-}
+-
+-f1();
+-f2();
+-f3();
+-setInterval(changeBackground, 500);
+\ No newline at end of file
+Index: Laborator4/lista_studenti.html
+===================================================================
+diff --git a/Laborator4/lista_studenti.html b/Laborator4/lista_studenti.html
+deleted file mode 100644
+--- a/Laborator4/lista_studenti.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,15 +0,0 @@
+-
+-<!doctype html>
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <link rel="stylesheet" type="text/css" href="http://192.168.37.37/laboratoare/04/tema.css">
+-    <script src="studenti.js"></script>
+-</head>
+-
+-<body>
+-    <p>aici va fi lista studenților</p>
+-</body>
+-<script src="activit.js"></script>
+-
+-</html>
+\ No newline at end of file
+Index: Laborator4/activit.js
+===================================================================
+diff --git a/Laborator4/activit.js b/Laborator4/activit.js
+deleted file mode 100644
+--- a/Laborator4/activit.js	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,17 +0,0 @@
+-lista= document.getElementsByTagName('p')[0];
+-var arrayStud = listaStudenti.split("\n");
+-console.log(arrayStud.length + ' studenti in grupa'); // studenti in grupa
+-var res = "<table><tr><th>nr</th><th>nume</th><th>L1</th><th>L2</th><th>L3</th></tr>";
+-arrayStud.forEach(function (student) {
+-    //console.log(student);
+-    var st = student.split(". ");
+-    res += "<tr><td>"+st[0]+"</td>";
+-    res += "<td><a href='http://192.168.37.37/~stud" + st[0] + "/'>" + st[1] + "</a></td>";
+-    res += "<td><img src=\"http://192.168.37.37/~stud" + st[0] + "/01/tema.png\"</td>";
+-    res += "<td><img src=\"http://192.168.37.37/~stud" + st[0] + "/02/tema.png\"</td>";
+-    res += "<td><img src=\"http://192.168.37.37/~stud" + st[0] + "/03/tema.png\"</td>";
+-    res += "</tr>";
+-});
+-res += "</table>";
+-console.log(res);
+-lista.innerHTML = res;
+\ No newline at end of file
+Index: Laborator4/tabel_carti.html
+===================================================================
+diff --git a/Laborator4/tabel_carti.html b/Laborator4/tabel_carti.html
+deleted file mode 100644
+--- a/Laborator4/tabel_carti.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,101 +0,0 @@
+-<!DOCTYPE html>
+-<html lang="en">
+-<head>
+-<meta charset="UTF-8">
+-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+-<title>Suma Totală</title>
+-<style>
+-    table {
+-        border-collapse: collapse;
+-        width: 100%;
+-    }
+-    th, td {
+-        border: 1px solid #dddddd;
+-        text-align: left;
+-        padding: 8px;
+-    }
+-    th {
+-        background-color: #f2f2f2;
+-    }
+-    .selected {
+-        background-color: lightblue; 
+-    }
+-</style>
+-</head>
+-<body>
+-
+-<h1>Laborator 4</h1>
+-
+-<table>
+-  <thead>
+-    <tr>
+-      <th>ID</th>
+-      <th>Carte</th>
+-      <th>Pret</th>
+-      <th>Selectare</th>
+-    </tr>
+-  </thead>
+-  <tbody>
+-    <tr>
+-      <td>1</td>
+-      <td>Javascript: Javascript basics for Beginners</td>
+-      <td>$19</td>
+-      <td><input type="checkbox" name="carte" value="19.99" onchange="highlightRow(this)"></td>
+-    </tr>
+-    <tr>
+-      <td>2</td>
+-      <td>JavaScript from Beginner to Professional</td>
+-      <td>$34</td>
+-      <td><input type="checkbox" name="carte" value="34.99" onchange="highlightRow(this)"></td>
+-    </tr>
+-    <tr>
+-      <td>3</td>
+-      <td>JavaScript From Zero to Hero</td>
+-      <td>$26</td>
+-      <td><input type="checkbox" name="carte" value="26.24" onchange="highlightRow(this)"></td>
+-    </tr>
+-    <tr>
+-      <td>4</td>
+-      <td>JavaScript: The Definitive Guide, 7th Edition</td>
+-      <td>$32</td>
+-      <td><input type="checkbox" name="carte" value="32.49" onchange="highlightRow(this)"></td>
+-    </tr>
+-    <tr>
+-      <td>5</td>
+-      <td>Eloquent JavaScript, 3rd Edition</td>
+-      <td>$20</td>
+-      <td><input type="checkbox" name="carte" value="20.94" onchange="highlightRow(this)"></td>
+-    </tr>
+-  </tbody>
+-</table>
+-
+-<br><br>
+-
+-<button onclick="calculSuma()">Calculează Suma Totală</button>
+-
+-<p id="sumaTotala"></p>
+-
+-<script>
+-function calculSuma() {
+-    var sum = 0;
+-    var checkboxes = document.getElementsByName("carte");
+-    for (var i = 0; i < checkboxes.length; i++) {
+-        if (checkboxes[i].checked) {
+-            sum += parseInt(checkboxes[i].value);
+-        }
+-    }
+-    document.getElementById("sumaTotala").innerHTML = "Suma Totală: $" + sum.toFixed(2);
+-}
+-
+-function highlightRow(checkbox) {
+-    var row = checkbox.parentNode.parentNode;
+-    if (checkbox.checked) {
+-        row.classList.add("selected");
+-    } else {
+-        row.classList.remove("selected");
+-    }
+-}
+-</script>
+-
+-</body>
+-</html>
+Index: Laborator5/asincron.html
+===================================================================
+diff --git a/Laborator5/asincron.html b/Laborator5/asincron.html
+deleted file mode 100644
+--- a/Laborator5/asincron.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,51 +0,0 @@
+-
+-<!DOCTYPE html>
+-<html lang="en">
+-
+-<head>
+-    <meta charset="UTF-8">
+-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <link rel="stylesheet" href="style.css">
+-    <title>Laborator 5</title>
+-</head>
+-
+-<body>
+-    <div class = "exercitiu">
+-        <h1>Exercitiul 1</h1>
+-        <h3>Lista carti:</h3>
+-        <ul id="ex1">
+-
+-        </ul>
+-    </div>
+-    <div class = "exercitiu">
+-        <h1>Exercitiul 2</h1>
+-        <h3>Lista carti:</h3>
+-        <ul id="ex2">
+-
+-        </ul>
+-    </div>
+-    
+-    <div class ="exercitiu", id="ex3">
+-        <h1>Exercitiul 3</h1>
+-        <p>
+-            Lorem ipsum dolor sit amet. Aut commodi saepe ut facilis
+-             ipsa At enim porro et quia itaque aut autem velit. Eos consequatur
+-              numquam qui impedit aperiam est quisquam minus est repudiandae adipisci
+-
+-        </p>
+-    </div>
+-    <div class ="exercitiu", id="ex4">
+-        <h1>Exercitiul 4</h1>
+-        <p>
+-            Lorem ipsum dolor sit amet. Aut commodi saepe ut facilis
+-             ipsa At enim porro et quia itaque aut autem velit. Eos consequatur
+-              numquam qui impedit aperiam est quisquam minus est repudiandae adipisci
+-
+-        </p>
+-    </div>
+-
+-    <script src="indexasincron.js"></script>
+-</body>
+-
+-</html>
+-
+Index: Laborator5/functii.html
+===================================================================
+diff --git a/Laborator5/functii.html b/Laborator5/functii.html
+deleted file mode 100644
+--- a/Laborator5/functii.html	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
++++ /dev/null	(revision a2f02dd3f8b11601e4b37038f47f764ce61b354c)
+@@ -1,128 +0,0 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-<meta charset="utf-8"/>
+-<title>PRW 2022</title>
+-<link rel="stylesheet" href="http://cti.ubm.ro/prw/05/style.css">
+-<script src="http://cti.ubm.ro/prw/05/my.js"></script>
+-<style>
+-  #textSection1 {
+-    border: 2px solid black;
+-    padding: 10px;
+-    margin-top: 20px;
+-    display: inline-block;
+-    width: 45%;
+-  }
+- 
+-  #textSection2 {
+-    border: 2px solid black;
+-    padding: 10px;
+-    margin-top: 20px;
+-    display: inline-block;
+-    width: 45%;
+-  }
+-</style>
+-</head>
+-<body>
+-<p>Programare Web - 05</p>
+-<div id="container">
+-  <div id='d1'>
+-    <textarea id="textAreaPoly">
+-      poly = [320,290, 100,360, 120,240, 320,290];
+-      my.log("poly: " + poly);
+-    </textarea>
+-    <br/>
+-    <textarea id="textAreaTitluri">
+-      titluriCarti = ["Titlu Carte 1", "Titlu Carte 2", "Titlu Carte 3", "Titlu Carte 4", "Titlu Carte 5"];
+-    </textarea>
+-    <br/>
+-    <button onclick="deseneazaPoly();">RUN Poly</button>
+-    <button onclick="afiseazaTitluriCarti();">RUN Titluri Sync</button>
+-    <button onclick="afiseazaTitluriAsincron();">RUN Titluri Async</button>
+-    <button onclick="sterge();">CLEAR</button>
+-  </div>
+- 
+-  <div id='myconsole'>
+-    <textarea id="textAreaOutput">
+-      my console
+-    </textarea>
+-  </div>
+- 
+-  <div id="textSection1">
+-    Aceasta este prima secțiune de text. (Schimbare la fiecare 3 secunde)
+-  </div>
+- 
+-  <div id="textSection2">
+-    Aceasta este a doua secțiune de text. (Schimbare la fiecare 5 secunde)
+-  </div>
+-</div>
+-</body>
+-<script>
+-// Funcția pentru schimbarea culorii de fundal la fiecare 3 secunde cu setInterval
+-function schimbaCuloare1() {
+-  var textSection1 = document.getElementById("textSection1");
+-  var culoareIndex = 0; // Indexul pentru a parcurge lista de culori
+-  var colors = ["lightpink", "lightblue", "lightgreen"]; // Lista de culori
+- 
+-  // Setăm un interval care să se repete la fiecare 3 secunde
+-  setInterval(function() {
+-    textSection1.style.backgroundColor = colors[culoareIndex]; // Schimbăm culoarea de fundal la culoarea corespunzătoare
+-    culoareIndex = (culoareIndex + 1) % colors.length; // Trecem la următoarea culoare din listă
+-  }, 3000);
+-}
+- 
+- 
+-function schimbaCuloare2() {
+-  var textSection2 = document.getElementById("textSection2");
+-  var colors = ["green", "blue", "yellow"];
+-  var index = 0;
+- 
+-  setInterval(function() {
+-    textSection2.style.backgroundColor = colors[index];
+-    index = (index + 1) % colors.length;
+-  }, 5000);
+-}
+- 
+-schimbaCuloare1();
+-schimbaCuloare2();
+- 
+-function deseneazaPoly() {
+-  var text = document.getElementById("textAreaPoly").value;
+-  eval(text);
+-}
+- 
+-function afiseazaTitluriCarti() {
+-  var titluri = document.getElementById("textAreaTitluri").value;
+-  var output = document.getElementById("textAreaOutput");
+- 
+-  var titluriArray = eval(titluri);
+-  output.value = "";
+- 
+-  for (var i = 0; i < titluriArray.length; i++) {
+-    output.value += (i + 1) + ". " + titluriArray[i] + "\n";
+-  }
+-}
+- 
+- 
+-function afiseazaTitluriAsincron() {
+-  var titluri = document.getElementById("textAreaTitluri").value;
+-  var output = document.getElementById("textAreaOutput");
+- 
+-  var titluriArray = eval(titluri);
+-  output.value = "";
+- 
+-  for (var i = 0; i < titluriArray.length; i++) {
+-    (function (i) {
+-      setTimeout(function () {
+-        output.value += (i + 1) + ". " + titluriArray[i] + "\n";
+-      }, 2000 * (i + 1));
+-    })(i);
+-  }
+-}
+- 
+- 
+-function sterge() {
+-  document.getElementById("textAreaOutput").value = '';
+-}
+-</script>
+-</html>
+\ No newline at end of file
+Index: .idea/Web.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/Web.iml b/.idea/Web.iml
+new file mode 100644
+--- /dev/null	(date 1709047965752)
++++ b/.idea/Web.iml	(date 1709047965752)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
++      <excludeFolder url="file://$MODULE_DIR$/temp" />
++      <excludeFolder url="file://$MODULE_DIR$/tmp" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1709047965772)
++++ b/.idea/modules.xml	(date 1709047965772)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/Web.iml" filepath="$PROJECT_DIR$/.idea/Web.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1709047965783)
++++ b/.idea/vcs.xml	(date 1709047965783)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1709047966033)
++++ b/.idea/.gitignore	(date 1709047966033)
+@@ -0,0 +1,5 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/

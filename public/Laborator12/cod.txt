@@ -1,0 +1,128 @@
+index.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor Data Visualization</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        svg {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<svg width="800" height="400"></svg>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const svg = d3.select('svg');
+        const width = +svg.attr('width');
+        const height = +svg.attr('height');
+        const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        const xScale = d3.scaleTime().range([0, innerWidth]);
+        const yScale = d3.scaleLinear().range([innerHeight, 0]);
+
+        const line = d3.line()
+            .x(d => xScale(d.timestamp))
+            .y(d => yScale(d.value));
+
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        g.append('g').attr('class', 'x-axis').attr('transform', `translate(0,${innerHeight})`);
+        g.append('g').attr('class', 'y-axis');
+
+        const xAxis = d3.axisBottom().scale(xScale);
+        const yAxis = d3.axisLeft().scale(yScale);
+
+        const updateChart = data => {
+            xScale.domain(d3.extent(data, d => d.timestamp));
+            yScale.domain([0, d3.max(data, d => d.value)]);
+
+            g.select('.x-axis').call(xAxis);
+            g.select('.y-axis').call(yAxis);
+
+            g.selectAll('.line')
+                .data([data])
+                .join('path')
+                .attr('class', 'line')
+                .attr('d', line)
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue');
+        };
+
+        const data = [];
+
+        const socket = new WebSocket('ws://localhost:8080');
+
+        socket.onmessage = event => {
+            const newData = JSON.parse(event.data);
+            data.push(newData);
+            if (data.length > 50) data.shift(); // Limit to the last 50 data points
+            updateChart(data);
+        };
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+server.js
+
+
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const WebSocket = require('ws');
+
+const server = http.createServer((req, res) => {
+    // Serve the index.html file
+    if (req.url === '/' || req.url === '/index.html') {
+        fs.readFile(path.join(__dirname, 'index.html'), (err, data) => {
+            if (err) {
+                res.writeHead(500);
+                res.end('Error loading index.html');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    } else {
+        res.writeHead(404);
+        res.end('Not Found');
+    }
+});
+
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', function connection(ws) {
+    console.log('Client connected');
+
+    const sendSensorData = () => {
+        const data = {
+            timestamp: Date.now(),
+            value: Math.random() * 100 // Simulate sensor data
+        };
+        ws.send(JSON.stringify(data));
+    };
+
+    const interval = setInterval(sendSensorData, 1000); // Send data every second
+
+    ws.on('close', () => {
+        clearInterval(interval);
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(8080, () => {
+    console.log('Server is listening on http://localhost:8080');
+});
