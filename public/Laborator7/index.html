@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students</title>
+    <title>Introducere date</title>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"
+    />
 </head>
 <body>
-<h1>Students</h1>
-<ul id="students-list"></ul>
+<h1>Introducere date</h1>
+<form class="container" method="POST" action="/">
+    <div class="form-group">
+        <label for="week">Saptamana:</label>
+        <input type="text" id="week" name="week" />
+    </div>
 
-<script>
-    // Afișare studenți
-    fetch('/students')
-        .then(response => response.json())
-        .then(students => {
-            const studentsList = document.getElementById('students-list');
-            students.forEach(student => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}, Projects: ${student.projects}`;
-                studentsList.appendChild(listItem);
-            });
-        })
-        .catch(error => console.error('Error fetching students:', error));
-</script>
+    <div class="form-group">
+        <label for="project">Proiect:</label>
+        <input type="text" id="project" name="project" />
+    </div>
+
+    <div class="form-group">
+        <label for="course">Curs:</label>
+        <input type="text" id="course" name="course" />
+    </div>
+
+    <button>ADD TO MONGODB</button>
+    <form action="/data">
+        <button type="submit">Vizualizare</button>
+    </form>
+</form>
 </body>
 </html>

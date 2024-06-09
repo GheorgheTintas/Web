@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Demonstrativ pentru Serviciul REST</title>
+</head>
+<body>
+  <h1>Client Demonstrativ pentru Serviciul REST</h1>
+  <div id="labList"></div>
+  <div id="activities"></div>
+
+  <script>
+    const baseURL = 'http://192.168.37.37:5523'; // Adresa serverului REST
+
+    // Funcție pentru a face cereri GET către server și a afișa rezultatul
+    async function fetchAndDisplay(url, targetElement) {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        targetElement.innerHTML = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error('Eroare:', error);
+      }
+    }
+
+    // Afisare lista de laboratoare
+    fetchAndDisplay(`${baseURL}/api/items`, document.getElementById('labList'))
+      .catch(console.error);
+
+    // Exemplu: Afisare activitati pentru saptamana 3
+    fetchAndDisplay(`${baseURL}/api/items/3`, document.getElementById('activities'))
+      .catch(console.error);
+  </script>
+</body>
+</html>
