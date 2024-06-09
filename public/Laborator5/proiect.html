@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functii asincrone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: black;
+        }
+        p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Funcții asincrone în JavaScript</h1>
+<h2>Callback-uri</h2>
+<p>Callback este o funcție care este trimisă ca și parametru unei alte funcții.</p>
+<button onclick="sumNumbers(5, 10, displaySum)">Calculează Suma (Corect)</button>
+<p id="sumResult"></p>
+<button onclick="sumError()">Calculează Suma (Eroare)</button>
+
+<h2>Promises</h2>
+<p>Promise este o funcție care returnează o promisiune, o valoare care poate fi disponibilă acum, în viitor sau niciodată. <br>
+    Acestea sunt utilizate pentru a trata mai ușor succesul sau eșecul operațiilor asincrone.</p>
+<button onclick="fetchNumbersPromise()">Afișează Numere (Corect)</button>
+<p id="numbersList"></p>
+<button onclick="fetchNumbersError()">Afișează Numere (Eroare)</button>
+
+<h2>Async/Await</h2>
+<p>'Async' este un cuvânt cheie folosit pentru a defini o funcție asincronă, care întotdeauna returnează o promisiune.<br>
+    'Await' este un operator utilizat în interiorul unei funcții marcate ca async și este folosit pentru a aștepta finalizarea unei promisiuni.
+    <br>El permite codului să aștepte rezolvarea sau respingerea unei promisiuni într-un mod similar cu codul sincron.<br>
+    Atunci când se utilizează await într-o funcție marcată ca async, execuția funcției este suspendată până când promisiunea este rezolvată sau respinsă.</p>
+<button onclick="fetchDisplay()">Afișează Liste (Corect)</button>
+<p id="itemsList"></p>
+<button onclick="fetchError()">Afișează Liste (Eroare)</button>
+
+<script>
+    // Exemplu cu Callback-uri
+    //Functia principala care primeste 2 numere a si b ca argumente si o functie de callback
+    function sumNumbers(a, b, callback) {
+        if (typeof a !== 'number' || typeof b !== 'number') {
+            throw new Error('Argumentele trebuie să fie numere.');
+        }
+        const sum = a + b;
+        callback(sum);
+        //se apelează funcția de callback cu rezultatul sumei ca argument
+    }
+    //functa de callback, cea care este trimisa ca argument functiei sumNumbers
+    //functia este chemata cu rezultattul sumei
+    function displaySum(sum) {
+        document.getElementById('sumResult').textContent = 'Suma numerelor este: ' + sum;
+        //se obtine elementul cu Id ul sumResult
+    }
+
+    function sumError() {
+        try {
+            sumNumbers('a', 10, displaySum); // Apel cu eroare
+        } catch (error) {
+            console.error(error);
+            document.getElementById('sumResult').textContent = 'A apărut o eroare: ' + error.message;
+        }
+    }
+
+    // Exemplu cu Promises
+    //se creaza si se returneaza o promisiune
+    //are doi parametrii(functii) pe care le putem apela  pentru a marca promisiunea ca rezolvata sau esuata
+    //se simuleaza o intarziere de 2 secunde si se verifica daca functia a fost apelata cu un argument si daca acel argument este o eroare
+    //daca nu este indeplinita conditie se rezolva promisiunea si se returneaza un arry de numere
+    function fetchNumbers() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (arguments.length && arguments[0] === 'error') {
+                    reject('Eroare la obținerea numerelor.');
+                } else {
+                    resolve([1, 2, 3, 4, 5]);
+                }
+            }, 2000);
+        });
+    }
+    //se apeleaza functia fetchNumbers care returneaza o promisiune
+    //se ataseaza un handler de succes  la promisiunea returnata ce primeste ca parametrul rezultatul promisiunii
+
+    function fetchNumbersPromise() {
+        fetchNumbers()
+            .then(numbers => {
+                const listElement = document.getElementById('numbersList');
+                numbers.forEach(number => {
+                    const li = document.createElement('li');
+                    li.textContent = number;
+                    listElement.appendChild(li);
+                });
+            })
+            .catch(error => console.error(error));
+    }
+
+    function fetchNumbersError() {
+        fetchNumbers('error') // Apel cu eroare
+            .then(numbers => {
+                console.log(numbers);
+            })
+            .catch(error => console.error(error));
+    }
+
+
+
+    // Exemplu cu async/await
+    async function fetchItems() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (arguments.length && arguments[0] === 'error') {
+                    reject('Eroare la obținerea listei.');
+                } else {
+                    resolve(['callback', 'promises', 'async', 'await']);
+                }
+            }, 2000);
+        });
+    }
+    async function fetchDisplay() {
+        try {
+            const items = await fetchItems();
+            const listElement = document.getElementById('itemsList');
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                listElement.appendChild(li);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetchError() {
+        try {
+            const items = await fetchItems('error'); // Apel cu eroare
+            console.log(items);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>
+</body>
+</html>
